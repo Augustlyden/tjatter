@@ -28,22 +28,25 @@
 </head>
 <body>
 
-  <div class="window-group">
-    <div class="window-titlebar">
-      <span class="pixel-bubble"></span>
-      TJATTER // <?= htmlspecialchars($group['name']) ?>
-      <div class="window-controls">
-        <span></span><span></span><span></span>
+  <div class="page-layout">
+    <?php include 'sidebar.php'; ?>
+    <div class="window-group">
+      <div class="window-titlebar">
+        <span class="pixel-bubble"></span>
+        TJATTER // <?= htmlspecialchars($group['name']) ?>
+        <div class="window-controls">
+          <span></span><span></span><span></span>
+        </div>
       </div>
+  
+      <section>
+        <article>
+          <?= htmlspecialchars($group['subject']) ?>
+        </article>
+      </section>
     </div>
-
-    <section>
-      <article>
-        <?= htmlspecialchars($group['subject']) ?>
-      </article>
-    </section>
-
   </div>
+
   
 </body>
 </html>
