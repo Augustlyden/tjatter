@@ -1,8 +1,10 @@
 <?php
+  require 'settings.php';
   require 'includes/formValidation.php';
+  require 'includes/functions.php';
 
   $email = $password = "";
-  $emailErr = $passwordErr = "";
+  $emailErr = $passwordErr = $err = "";
 
   if ($_SERVER["REQUEST_METHOD"]  === "POST") {
     if (empty($_POST['email'])) {
@@ -17,6 +19,23 @@
       $passwordErr = 'Password is required';
     } else {
       $password = $_POST["password"];
+    }
+
+    if (empty($emailErr) && empty($passwordErr) ) {
+      $stmt = $db->prepare('SELECT * FROM users WHERE email = :email;');
+      $stmt->execute([':email' => $email]);
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      if (!$row) {
+        $err = "Wrong email or password";
+      }
+
+      // add verify_password() function
+      if (empty($err)) {
+        $_SESSION['user_id'] = $row['id'];
+        header('Location: /dashboard.php');
+        die();
+      }
     }
   }
 ?>
@@ -56,6 +75,7 @@
         </div>
   
         <button type="submit">Login</button>
+        <span class="<?= $err ? 'error' : '' ?>"><?= $err ?></span>
       </form>
       <p class="window-footer">Don't have an account? <a href="register.php">Create one</a></p>
     </div>
