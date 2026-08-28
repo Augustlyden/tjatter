@@ -67,9 +67,18 @@
       }
 
       if (empty($err) && empty($usernameExistsErr)) {
-        $stmt = $db->prepare('INSERT INTO users (fname, lname, username, email, password) VALUES (:fname, :lname, :username, :email, :password)');
+        $stmt = $db->prepare(
+          'INSERT INTO users (fname, lname, username, email, password) 
+          VALUES (:fname, :lname, :username, :email, :password)'
+        );
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt->execute([':fname' => $fname, ':lname' => $lname, ':username' => $username, ':email' => $email, ':password' => $hashedPassword]);
+        $stmt->execute([
+          ':fname' => $fname,
+          ':lname' => $lname, 
+          ':username' => $username, 
+          ':email' => $email, 
+          ':password' => $hashedPassword
+        ]);
         $newUserId = $db->lastInsertId();
         $_SESSION['user_id'] = $newUserId;
         header('Location: /dashboard.php');
