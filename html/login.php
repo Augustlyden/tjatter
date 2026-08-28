@@ -26,11 +26,10 @@
       $stmt->execute([':email' => $email]);
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      if (!$row) {
+      if (!$row || !password_verify($password, $row['password'])) {
         $err = "Wrong email or password";
       }
 
-      // add verify_password() function
       if (empty($err)) {
         $_SESSION['user_id'] = $row['id'];
         header('Location: /dashboard.php');
