@@ -11,7 +11,6 @@
 
 <aside class="sidebar">
   <div class="window-titlebar">
-    <span class="pixel-bubble"></span>
     MENU
     <div class="window-controls">
       <span></span><span></span>
