@@ -2,7 +2,7 @@
   require 'includes/formValidation.php';
 
   $email = $password = "";
-  $emailErr = $usernameErr = "";
+  $emailErr = $passwordErr = "";
 
   if ($_SERVER["REQUEST_METHOD"]  === "POST") {
     if (empty($_POST['email'])) {
@@ -52,7 +52,7 @@
         <div>
           <label for="password"><span class="required">*</span> Password</label>
           <input type="password" id="password" name="password">
-          <span class="<?= $usernameErr ? 'error' : '' ?>"><?= $usernameErr ?></span>
+          <span class="<?= $passwordErr ? 'error' : '' ?>"><?= $passwordErr ?></span>
         </div>
   
         <button type="submit">Login</button>
