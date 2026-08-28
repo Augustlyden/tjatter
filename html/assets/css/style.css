@@ -213,6 +213,46 @@ button:active, .enter-button:active {
   margin: 4px 0 0;
 }
 
+.user-card {
+  display: flex;
+  flex-direction: row;
+  background: var(--panel);
+  border: 3px solid var(--ink);
+  margin: 12px;
+  padding: 12px;
+  gap: 10px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.halftone {
+  background-color: var(--mustard);
+  /* background-image: radial-gradient(rgba(27, 27, 47, 0.4) 1.4px, transparent 1.4px);
+  background-size: 8px 8px; */
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  background-color: var(--pixel-green);
+  border: 3px solid var(--ink);
+}
+
+.name {
+  font-size: 18px;
+}
+
+.name, .username {
+  font-weight: 700;
+}
+
+.username {
+  opacity: 0.75;
+}
+
 .group-subject {
   font-size: 13px;
   color: var(--ink);
@@ -284,10 +324,9 @@ button:active, .enter-button:active {
   max-width: 500px;
   min-height: 200px;
   width: 100%;
-  padding: 1rem;
+  padding: 0 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
 }
 
 @media (max-width: 700px) {

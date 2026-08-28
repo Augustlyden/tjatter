@@ -3,6 +3,17 @@
   require 'includes/functions.php';
 
   if (isset($_SESSION['user_id'])) {
+    $userStmt = $db->prepare(
+      'SELECT 
+        fname,
+        lname,
+        username
+      FROM users
+      WHERE id = :id;'
+    );
+    $userStmt->execute([':id' => $_SESSION['user_id']]);
+    $user = $userStmt->fetch(PDO::FETCH_ASSOC);
+
     $stmt = $db->prepare(
       'SELECT 
         g.id AS group_id,
@@ -46,7 +57,16 @@
         </div>
       </div>
 
+      <div class="user-card halftone">
+        <div class="avatar"></div>
+        <div class="user-info">
+          <span class="name"><?= $user['fname']?> <?= $user['lname'] ?></span>
+          <span class="username">@<?= $user['username'] ?></span>
+        </div>
+      </div>
+
       <section class="group-grid">
+
         <?php if (empty($rows)): ?>  
           <div class="empty-rows">
             <p>You aren't part of any groups just yet.</p>
