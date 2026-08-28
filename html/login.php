@@ -1,3 +1,26 @@
+<?php
+  require 'includes/formValidation.php';
+
+  $email = $password = "";
+  $emailErr = $passwordErr = "";
+
+  if ($_SERVER["REQUEST_METHOD"]  === "POST") {
+    if (empty($_POST['email'])) {
+      $emailErr = 'Email is required';
+    } else {
+      $email = test_input($_POST['email']);
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $emailErr = "Invalid email format";
+      }
+    }
+    if (empty($_POST['password'])) {
+      $passwordErr = 'Password is required';
+    } else {
+      $password = $_POST["password"];
+    }
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,15 +42,17 @@
     
     <div class="window-body">
       <h1>Login</h1>
-      <form>
+      <form method="post" action="login.php">
         <div>
-          <label for="email">Email address</label>
-          <input type="email" id="email" name="email" required>
+          <label for="email"> <span class="required">*</span> Email address</label>
+          <input type="email" id="email" name="email" value="<?= htmlspecialchars($email) ?>">
+          <span class="<?= $emailErr ? 'error' : '' ?>"><?= $emailErr ?></span>
         </div>
   
         <div>
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required>
+          <label for="password"><span class="required">*</span> Password</label>
+          <input type="password" id="password" name="password">
+          <span class="<?= $passwordErr ? 'error' : '' ?>"><?= $passwordErr ?></span>
         </div>
   
         <button type="submit">Login</button>

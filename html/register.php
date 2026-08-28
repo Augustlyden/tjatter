@@ -1,3 +1,57 @@
+<?php
+  require 'includes/formValidation.php';
+
+  $fname = $lname = $username = $email = $password = "";
+  $fnameErr = $lnameErr = $usernameErr = $emailErr = $passwordErr = "";
+
+  if ($_SERVER["REQUEST_METHOD"]  === "POST") {
+    if (empty($_POST['fname'])) {
+      $fnameErr = 'Firstname is required';
+    } else {
+      $fname = test_input($_POST['fname']);
+      if (!preg_match("/^[\p{L}' -]*$/u",$fname)) {
+        $fnameErr = "Only letters and white space allowed";
+      }
+    }
+
+    if (empty($_POST['lname'])) {
+      $lnameErr = 'Lastname is required';
+    } else {
+      $lname = test_input($_POST['lname']);
+      if (!preg_match("/^[\p{L}' -]*$/u",$lname)) {
+        $lnameErr = "Only letters and white space allowed";
+      }
+    }
+    
+    if (empty($_POST['username'])) {
+      $usernameErr = 'Username is required';
+    } else {
+      $username = test_input($_POST['username']);
+    }
+
+    if (empty($_POST['email'])) {
+      $emailErr = 'Email is required';
+    } else {
+      $email = test_input($_POST['email']);
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $emailErr = "Invalid email format";
+      }
+    }
+    
+    if (empty($_POST['password'])) {
+      $passwordErr = 'Password is required';
+    } else {
+      $password = $_POST["password"];
+      if (strlen($password) < 8) {
+        $passwordErr = 'Password must be at least 8 characters';
+      }
+      if (!preg_match('/^(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).{8,}$/', $password)) {
+        $passwordErr = 'Password must contain an uppercase letter, a number, and a special character';
+      }
+    }
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,30 +73,35 @@
 
     <div class="window-body">
       <h1>Register</h1>
-      <form>
+      <form method="post" action="register.php">
         <div>
-          <label for="fname">Firstname</label>
-          <input type="text" id="fname" name="fname">
+          <label for="fname"><span class="required">*</span> Firstname</label>
+          <input type="text" id="fname" name="fname" value="<?= htmlspecialchars($fname) ?>">
+          <span class="<?= $fnameErr ? 'error' : '' ?>"><?= $fnameErr ?></span>
         </div>
 
         <div>
-          <label for="username">Lastname</label>
-          <input type="text" id="lname" name="lname">
+          <label for="lname"><span class="required">*</span> Lastname</label>
+          <input type="text" id="lname" name="lname" value="<?= htmlspecialchars($lname) ?>">
+          <span class="<?= $lnameErr ? 'error' : '' ?>"><?= $lnameErr ?></span>
         </div>
 
         <div>
-          <label for="username">Username</label>
-          <input type="text" id="username" name="username">
+          <label for="username"><span class="required">*</span> Username</label>
+          <input type="text" id="username" name="username" value="<?= htmlspecialchars($username) ?>">
+          <span class="<?= $usernameErr ? 'error' : '' ?>"><?= $usernameErr ?></span>
         </div>
   
         <div>
-          <label for="email">Email address</label>
-          <input type="email" id="email" name="email" required>
+          <label for="email"><span class="required">*</span> Email address</label>
+          <input type="email" id="email" name="email" value="<?= htmlspecialchars($email) ?>">
+          <span class="<?= $emailErr ? 'error' : '' ?>"><?= $emailErr ?></span>
         </div>
 
         <div>
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required>
+          <label for="password"><span class="required">*</span> Password</label>
+          <input type="password" id="password" name="password">
+          <span class="<?= $passwordErr ? 'error' : '' ?>"><?= $passwordErr ?></span>
         </div>
   
         <button type="submit">Register</button>

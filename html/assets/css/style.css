@@ -188,12 +188,9 @@ button:active, .enter-button:active {
 }
 
 .error {
-  background: var(--coral);
-  color: var(--panel);
-  border: var(--border-width) solid var(--ink);
-  padding: 10px 12px;
+  color: var(--coral);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 700; 
 }
 
 .group-grid {
@@ -277,6 +274,10 @@ button:active, .enter-button:active {
 .sidebar-nav a.active {
   background: var(--coral);
   color: var(--panel);
+}
+
+.required {
+  color: var(--coral);
 }
 
 @media (max-width: 700px) {
