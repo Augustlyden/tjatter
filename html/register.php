@@ -1,5 +1,7 @@
 <?php
+  require 'settings.php';
   require 'includes/formValidation.php';
+  require 'includes/functions.php';
 
   $fname = $lname = $username = $email = $password = "";
   $fnameErr = $lnameErr = $usernameErr = $emailErr = $passwordErr = "";
@@ -45,9 +47,14 @@
       if (strlen($password) < 8) {
         $passwordErr = 'Password must be at least 8 characters';
       }
-      if (!preg_match('/^(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).{8,}$/', $password)) {
-        $passwordErr = 'Password must contain an uppercase letter, a number, and a special character';
-      }
+    }
+
+    if (empty($fnameErr) && empty($lnameErr) && empty($usernameErr) && empty($emailErr) && empty($passwordErr)) {
+      // add hash_password() function
+      $stmt = $db->prepare('INSERT INTO users (fname, lname, username, email, password) VALUES (:fname, :lname, :username, :email, :password)');
+      $stmt->execute([':fname' => $fname, ':lname' => $lname, ':username' => $username, ':email' => $email, ':password' => $password]);
+      header('Location: /dashboard.php');
+      die();
     }
   }
 ?>
@@ -109,7 +116,6 @@
   
       <p class="window-footer">Already have an account? <a href="login.php">Login</a></p>
     </div>
-
 
   </div>
 </body>
