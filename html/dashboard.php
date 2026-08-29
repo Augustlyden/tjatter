@@ -78,7 +78,11 @@
               <div class="group-card-body">
                 <h2><?= htmlspecialchars($row['group_name']) ?></h2>
                 <p class="group-subject"><?= htmlspecialchars($row['subject']) ?></p>
-                <p class="group-members"><?= (int)$row['members'] ?> members</p>
+                <p class="group-members">
+                  <?= (int)$row['members'] ?> 
+                  <?php $members = (int)$row['members'] === 1 ? 'member' : 'members'?>
+                  <?= $members ?>
+                </p>
                 <div class="enter">
                   <a class="enter-button" href="group.php?id=<?= (int)$row['group_id'] ?>">Enter Group</a>
                 </div>
