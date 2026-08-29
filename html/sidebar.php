@@ -4,7 +4,7 @@
   $navLinks = [
     'dashboard' => ['label' => 'Dashboard', 'href' => 'dashboard.php'],
     'groups' => ['label' => 'Groups', 'href' => 'groups.php'],
-    'profile' => ['label' => 'Profile', 'href' => 'profile.php'],
+    'create-group' => ['label' => 'Create Group', 'href' => 'create-group.php'],
     'logout' => ['label' => 'Logout', 'href' => 'logout.php']
   ];
 ?>

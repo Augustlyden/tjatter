@@ -34,15 +34,10 @@
   }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tjatter - Dashboard</title>
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-  <link rel="stylesheet" href="/assets/css/style.css">
-</head>
+<?php 
+  $page_name = 'Tjatter - Dashboard';
+  include 'index.php'; 
+?>
 <body>
   <div class="page-layout">
 
@@ -70,8 +65,10 @@
         <?php if (empty($rows)): ?>  
           <div class="empty-rows">
             <p>You aren't part of any groups just yet.</p>
-            <div class="enter">
+            <div class="empty-buttons">
               <a class="enter-button" href="groups.php">JOIN SOME?</a>
+              <p>or</p>
+              <a class="enter-button" href="create-group.php">CREATE YOUR OWN</a>
             </div>
           </div>
         <?php else: ?>

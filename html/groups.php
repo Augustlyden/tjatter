@@ -2,15 +2,10 @@
   require 'data.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tjatter - Groups</title>
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-  <link rel="stylesheet" href="/assets/css/style.css">
-</head>
+<?php 
+  $page_name = 'Tjatter - All Groups';
+  include 'index.php';
+?>
 <body>
   <div class="page-layout">
     <?php include 'sidebar.php'; ?>
