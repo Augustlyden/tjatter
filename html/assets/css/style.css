@@ -118,7 +118,7 @@ label {
   letter-spacing: 0.5px;
 }
 
-input {
+input, textarea {
   font-family: 'Space Mono', monospace;
   font-size: 14px;
   padding: 10px 12px;
@@ -127,12 +127,18 @@ input {
   color: var(--ink);
   outline: none;
   border-radius: 0;
+  width: 100%;
 }
 
-input:focus {
+input:focus, textarea:focus {
   background: #fff;
   border-color: var(--coral);
   box-shadow: 3px 3px 0 var(--coral);
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
 }
 
 button, .enter-button {
@@ -165,8 +171,13 @@ button:active, .enter-button:active {
   text-decoration: none;
 }
 
-.enter {
+.enter, .empty-buttons {
   margin-top: 1rem;
+}
+
+.empty-buttons {
+  display: flex;
+  gap: 1rem;
 }
 
 .window-footer {
@@ -327,6 +338,10 @@ button:active, .enter-button:active {
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
+}
+
+.empty-rows p {
+  font-weight: 700;
 }
 
 @media (max-width: 700px) {
