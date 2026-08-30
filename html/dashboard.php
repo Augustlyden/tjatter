@@ -23,7 +23,7 @@
       FROM groups_ g
       JOIN group_members gm ON g.id = gm.group_id
       JOIN users u ON gm.user_id = u.id
-      WHERE u.id = :id and gm.status = 'approved'
+      WHERE u.id = :id and gm.status = "approved"
       ORDER BY g.group_name;'
     );
     $stmt->execute([':id' => $_SESSION['user_id']]);
@@ -94,6 +94,5 @@
     </div>
 
   </div>
-
 </body>
 </html>
