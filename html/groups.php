@@ -59,7 +59,7 @@
                   <input type="hidden" name="group_id" value="<?= (int)$row['group_id'] ?>">
                   <button type="submit">Request to join</button>
                   <?php if (isset($_SESSION['err'])); ?>
-                    <p><?= $_SESSION['err'] ?></p>
+                    <p class="error"><?= $_SESSION['err'] ?></p>
                     <?php unset($_SESSION['err']); ?>
                   <?php endif; ?>
                 </form>
