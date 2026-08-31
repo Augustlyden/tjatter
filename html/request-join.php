@@ -7,12 +7,6 @@
     die();
   }
 
-  function redirectAndKill($message) {
-    $_SESSION['err'] = $message;
-    header('Location: /groups.php');
-    die();
-  }
-
   if  ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['group_id'])) {
     $groupCheck = $db->prepare(
       'SELECT * FROM groups_ WHERE id = :id;'
