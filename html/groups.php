@@ -12,7 +12,7 @@
       FROM groups_ g
       WHERE NOT EXISTS (
         SELECT 1 FROM group_members gm
-        WHERE gm.group_id = g.id AND gm.user_id = :id
+        WHERE gm.group_id = g.id AND gm.user_id = :id;
       )
       ORDER BY g.group_name;'
     );
