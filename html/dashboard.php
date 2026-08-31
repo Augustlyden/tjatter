@@ -23,7 +23,7 @@
       FROM groups_ g
       JOIN group_members gm ON g.id = gm.group_id
       JOIN users u ON gm.user_id = u.id
-      WHERE u.id = :id and gm.status = "approved"
+      WHERE u.id = :id and gm.status = \'approved\'
       ORDER BY g.group_name;'
     );
     $stmt->execute([':id' => $_SESSION['user_id']]);
@@ -55,8 +55,8 @@
       <div class="user-card halftone">
         <div class="avatar"></div>
         <div class="user-info">
-          <span class="name"><?= $user['fname']?> <?= $user['lname'] ?></span>
-          <span class="username">@<?= $user['username'] ?></span>
+          <span class="name"><?= htmlspecialchars($user['fname'])?> <?= htmlspecialchars($user['lname']) ?></span>
+          <span class="username">@<?= htmlspecialchars($user['username']) ?></span>
         </div>
       </div>
 

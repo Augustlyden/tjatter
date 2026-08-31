@@ -254,17 +254,10 @@ button:active, .enter-button:active {
 
 .name {
   font-size: 18px;
-}
-
-.name, .username {
   font-weight: 700;
 }
 
-.username {
-  opacity: 0.75;
-}
-
-.group-subject {
+.group-subject, .username {
   font-size: 13px;
   color: var(--ink);
   opacity: 0.75;
