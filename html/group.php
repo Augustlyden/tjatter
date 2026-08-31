@@ -59,7 +59,7 @@
             <p>You're not a member of this group yet</p>
             <form method="post" action="request-join.php">
               <input type="hidden" name="group_id" value="<?= $group_id ?>">
-              <button type="submit">Request to join</button>
+              <button class="button" type="submit">Request to join</button>
             </form>
           </div>
         <?php else: ?>

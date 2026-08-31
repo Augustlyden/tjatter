@@ -54,7 +54,7 @@
     </div>
     
     <div class="window-body">
-      <h1>Login</h1>
+      <h1 class="title">Login</h1>
       <form method="post" action="login.php">
         <div>
           <label for="email"> <span class="required">*</span> Email address</label>
@@ -68,7 +68,7 @@
           <span class="<?= $passwordErr ? 'error' : '' ?>"><?= $passwordErr ?></span>
         </div>
   
-        <button type="submit">Login</button>
+        <button class="button" type="submit">Login</button>
         <span class="<?= $err ? 'error' : '' ?>"><?= $err ?></span>
       </form>
       <p class="window-footer">Don't have an account? <a href="register.php">Create one</a></p>
