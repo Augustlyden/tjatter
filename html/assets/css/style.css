@@ -97,7 +97,7 @@ body {
   padding: 28px 24px;
 }
 
-.window-body h1 {
+.title {
   font-family: 'Press Start 2P', monospace;
   font-size: 16px;
   line-height: 1.6;
@@ -141,7 +141,7 @@ textarea {
   resize: vertical;
 }
 
-button, .enter-button {
+.button, .enter-button {
   font-family: 'Space Mono', monospace;
   font-weight: 700;
   font-size: 14px;
@@ -157,12 +157,12 @@ button, .enter-button {
   transition: transform 0.05s ease, box-shadow 0.05s ease;
 }
 
-button:hover, .enter-button:hover {
+.button:hover, .enter-button:hover {
   background: var(--mustard);
   color: var(--ink);
 }
 
-button:active, .enter-button:active {
+.button:active, .enter-button:active {
   transform: translate(4px, 4px);
   box-shadow: 0 0 0 var(--ink);
 }
@@ -296,7 +296,7 @@ button:active, .enter-button:active {
   flex-direction: column;
 }
 
-.sidebar-nav a {
+.sidebar-nav a, .logout-button {
   padding: 12px 16px;
   font-size: 12px;
   font-weight: 700;
@@ -307,11 +307,16 @@ button:active, .enter-button:active {
   border-bottom: 2px solid var(--ink);
 }
 
-.sidebar-nav a:last-child {
+.logout-button {
   border-bottom: none;
+  text-align: left;
+  font-family: 'Space Mono', monospace;
+  border: none;
+  background-color: var(--panel);
+  cursor: pointer;
 }
 
-.sidebar-nav a:hover {
+.sidebar-nav a:hover, .logout-button:hover {
   background: var(--mustard);
 }
 

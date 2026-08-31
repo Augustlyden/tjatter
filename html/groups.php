@@ -12,7 +12,7 @@
       FROM groups_ g
       WHERE NOT EXISTS (
         SELECT 1 FROM group_members gm
-        WHERE gm.group_id = g.id AND gm.user_id = :id;
+        WHERE gm.group_id = g.id AND gm.user_id = :id
       )
       ORDER BY g.group_name;'
     );
@@ -42,7 +42,7 @@
       <section class="group-grid">
         <?php if (empty($rows)): ?>  
           <div class="empty-rows">
-            <p>Oops, no available groups here.</p>
+            <p>Oops, you've joined all groups already.</p>
             <div class="empty-buttons">
               <a class="enter-button" href="create-group.php">CREATE ONE?</a>
             </div>
@@ -61,7 +61,6 @@
                   <?php if (isset($_SESSION['err'])); ?>
                     <p class="error"><?= $_SESSION['err'] ?></p>
                     <?php unset($_SESSION['err']); ?>
-                  <?php endif; ?>
                 </form>
               </div>
             </article>

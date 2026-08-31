@@ -86,6 +86,7 @@
       </div>
 
       <div class="window-body">
+        <h1 class="title">Create Group</h1>
         <form method="post" action="create-group.php">
           <div>
             <label for="groupName"><span class="required">*</span> Title</label>
@@ -105,7 +106,7 @@
             <span class="<?= $descErr ? 'error' : '' ?>"><?= $descErr ?></span>
           </div>
   
-          <button type="submit">Create</button>
+          <button class="button" type="submit">Create</button>
           <span class="<?= $dbErr ? 'error' : '' ?>"><?= $dbErr ?></span>
   
         </form>

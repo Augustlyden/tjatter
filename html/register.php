@@ -103,7 +103,7 @@
     </div>
 
     <div class="window-body">
-      <h1>Register</h1>
+      <h1 class="title">Register</h1>
       <form method="post" action="register.php">
         <div>
           <label for="fname"><span class="required">*</span> Firstname</label>
@@ -135,7 +135,7 @@
           <span class="<?= $passwordErr ? 'error' : '' ?>"><?= $passwordErr ?></span>
         </div>
   
-        <button type="submit">Register</button>
+        <button class="button" type="submit">Register</button>
         <span class="<?= $err ? 'error' : '' ?>"><?= $err ?></span>
         <span class="<?= $usernameExistsErr ? 'error' : '' ?>"><?= $usernameExistsErr ?></span>
       </form>
