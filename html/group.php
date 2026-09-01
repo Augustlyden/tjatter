@@ -19,10 +19,11 @@
     $stmt = $db->prepare(
       'SELECT 
         g.id AS group_id,
-        g.group_name as name,
+        g.group_name,
         g.subject,
         g.members,
-        g.description
+        g.description,
+        gm.role
       FROM groups_ g
       JOIN group_members gm ON gm.group_id = g.id
       JOIN users u ON gm.user_id = u.id 
@@ -30,6 +31,15 @@
     );
     $stmt->execute([':group_id' => $group_id, ':user_id' => $_SESSION['user_id']]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!empty($row)) {
+      $discussionStmt = $db->prepare(
+        'SELECT * FROM discussions
+        WHERE group_id = :group_id;'
+      );
+      $discussionStmt->execute([':group_id' => $group_id]);
+      $discussions = $discussionStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
   } else {
     header('Location: /login.php');
     die();
@@ -52,28 +62,57 @@
           <span></span><span></span><span></span>
         </div>
       </div>
-  
-      <section>
+
+      <div>
         <?php if (empty($row)): ?>
-          <div>
-            <p>You're not a member of this group yet</p>
-            <form method="post" action="request-join.php">
-              <input type="hidden" name="group_id" value="<?= $group_id ?>">
-              <button class="button" type="submit">Request to join</button>
-            </form>
-          </div>
-        <?php else: ?>
-          <article class="group">
-            <div class="user-card halftone">
-              <div class="avatar"></div>
-              <div class="user-info">
-                <span class="name"><?= htmlspecialchars($row['name']) ?></span>
-                <span class="group-subject"><?= htmlspecialchars($row['subject']) ?></span>
-                <p class="description"><?= htmlspecialchars($row['description']) ?></p>
+          <section>
+            <div>
+              <p>You're not a member of this group yet</p>
+              <form method="post" action="request-join.php">
+                <input type="hidden" name="group_id" value="<?= $group_id ?>">
+                <button class="button" type="submit">Request to join</button>
+              </form>
             </div>
-          </article>
+          </section>
+        <?php else: ?>
+          <section>
+            <article class="group">
+              <div class="user-card halftone">
+                <div class="avatar"></div>
+                <div class="user-info">
+                  <span class="name"><?= htmlspecialchars($row['group_name']) ?></span>
+                  <span class="group-subject"><?= htmlspecialchars($row['subject']) ?></span>
+                  <p class="description"><?= htmlspecialchars($row['description']) ?></p>
+                  <div class="create">
+                    <a class="enter-button" href="create-discussion.php?group_id=<?= $group_id ?>">CREATE DISCUSSION</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </section>
+  
+          <section class="group-grid">
+            <?php if (!$discussions): ?>
+              <div class="empty-rows">
+                <p>There are no discussions here yet.</p>
+              </div>
+            <?php else: ?>
+              <?php foreach ($discussions as $discussion): ?>
+                <article class="panel group-card">
+                  <span class="pixel-bubble"></span>
+                  <div class="group-card-body">
+                    <h2><?= htmlspecialchars($discussion['discussion_name']) ?></h2>
+                    <div class="enter">
+                      <a class="enter-button" href="discussion.php?id=<?= (int)$discussion['id'] ?>">Enter Discussion</a>
+                    </div>
+                  </div>
+                </article>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </section>
         <?php endif; ?>
-      </section>
+      </div>
+  
     </div>
   </div>
   
