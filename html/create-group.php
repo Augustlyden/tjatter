@@ -62,7 +62,7 @@
       } catch (Exception $e) {
         $db->rollBack();
         $dbErr = 'Something went wrong, try again';
-        echo $e->getMessage();
+        error_log('create-group.php:' . $e->getMessage());
       }
     }
   }

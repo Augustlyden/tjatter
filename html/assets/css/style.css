@@ -342,6 +342,10 @@ textarea {
   font-weight: 700;
 }
 
+.create {
+  margin-bottom: 10px;
+}
+
 @media (max-width: 700px) {
   .page-layout {
     flex-direction: column;
