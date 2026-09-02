@@ -2,9 +2,9 @@
   session_start();
   $db = new PDO("mysql:host=" . DB_HOST . ";dbname=tjatter_db;charset=utf8mb4", DB_USER, DB_PASSWORD);
 
-  function redirectAndKill($message) {
+  function redirectAndKill($message, $url) {
     $_SESSION['err'] = $message;
-    header('Location: /groups.php');
+    header('Location: ' . $url);
     die();
   }
 ?>
