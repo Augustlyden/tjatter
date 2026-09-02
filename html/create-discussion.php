@@ -1,6 +1,7 @@
 <?php 
   require 'settings.php';
   require 'includes/functions.php';
+  require 'includes/formValidation.php';
 
   if (!isset($_SESSION['user_id'])) {
     header('Location: /login.php');
@@ -41,11 +42,11 @@
     $member = $memberCheck->fetch(PDO::FETCH_ASSOC);
 
     if (!$group) {
-      redirectAndKill('This "group" does not exist.');
+      redirectAndKill('This "group" does not exist.', '/groups.php');
     }
 
     if (!$member) {
-      redirectAndKill("You're not a member of this group. Join to create a discussion");
+      redirectAndKill("You're not a member of this group. Join to create a discussion", '/groups.php');
     }
 
     if (empty($discussionNameErr) && empty($postErr)) {

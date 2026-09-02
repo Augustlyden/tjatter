@@ -2,7 +2,6 @@
   require 'settings.php';
   require 'includes/functions.php';
 
-  $err = "";
   $group_id = (int)$_GET['id'];
 
   if (isset($_SESSION['user_id'])) {
@@ -13,7 +12,7 @@
     $group = $groupCheck->fetch(PDO::FETCH_ASSOC);
 
     if (!$group) {
-      redirectAndKill('This "group" does not exist.');
+      redirectAndKill('This "group" does not exist.', '/groups.php');
     }
 
     $stmt = $db->prepare(
@@ -35,7 +34,8 @@
     if (!empty($row)) {
       $discussionStmt = $db->prepare(
         'SELECT * FROM discussions
-        WHERE group_id = :group_id;'
+        WHERE group_id = :group_id
+        ORDER BY discussions.created_at;'
       );
       $discussionStmt->execute([':group_id' => $group_id]);
       $discussions = $discussionStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -103,7 +103,7 @@
                   <div class="group-card-body">
                     <h2><?= htmlspecialchars($discussion['discussion_name']) ?></h2>
                     <div class="enter">
-                      <a class="enter-button" href="discussion.php?id=<?= (int)$discussion['id'] ?>">Enter Discussion</a>
+                      <a class="enter-button" href="discussion.php?id=<?= (int)$discussion['id'] ?>">Enter</a>
                     </div>
                   </div>
                 </article>
@@ -117,4 +117,3 @@
   </div>
   
 </body>
-</html>

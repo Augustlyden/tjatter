@@ -60,7 +60,7 @@
                   <button type="submit">Request to join</button>
                   <?php if (isset($_SESSION['err'])); ?>
                     <p class="error"><?= $_SESSION['err'] ?></p>
-                    <?php unset($_SESSION['err']); ?>
+                  <?php unset($_SESSION['err']); ?>
                 </form>
               </div>
             </article>
