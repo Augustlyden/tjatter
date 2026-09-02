@@ -14,6 +14,10 @@
     $groupCheck->execute([':id' => $_POST['group_id']]);
     $group = $groupCheck->fetch(PDO::FETCH_ASSOC);
 
+    if (!$group) {
+      redirectAndKill('This "group" does not exist.', '/groups.php');
+    }
+
     $memberCheck = $db->prepare(
       'SELECT * FROM group_members 
       WHERE user_id = :user_id AND group_id = :group_id;'
@@ -24,12 +28,8 @@
     ]);
     $member = $memberCheck->fetch(PDO::FETCH_ASSOC);
 
-    if (!$group) {
-      redirectAndKill('This "group" does not exist.');
-    }
-
     if ($member) {
-      redirectAndKill("You're already a member of this group.");
+      redirectAndKill("You're already a member of this group.", '/groups.php');
     }
 
     $stmt = $db->prepare(

@@ -61,7 +61,7 @@
     <div class="window-group">
       <div class="window-titlebar">
         <span class="pixel-bubble"></span>
-        TJATTER // <?= htmlspecialchars($row['discussion_name']) ?>
+        TJATTER // <?= htmlspecialchars($discussion['discussion_name']) ?>
         <div class="window-controls">
           <span></span><span></span><span></span>
         </div>
