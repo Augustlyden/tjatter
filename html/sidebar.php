@@ -21,7 +21,7 @@
         <?= $link['label'] ?>
       </a>
     <?php endforeach; ?>
-    <form action="logout.php" method="post">
+    <form class="form" action="logout.php" method="post">
       <button class="logout-button" type="submit">Logout</button>
     </form>
   </nav>

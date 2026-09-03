@@ -1,6 +1,5 @@
 <?php
   require 'settings.php';
-  require 'includes/formValidation.php';
   require 'includes/functions.php';
 
   $fname = $lname = $username = $email = $password = "";
@@ -10,7 +9,7 @@
     if (empty($_POST['fname'])) {
       $fnameErr = 'Firstname is required';
     } else {
-      $fname = test_input($_POST['fname']);
+      $fname = trim($_POST['fname']);
       if (!preg_match("/^[\p{L}' -]*$/u",$fname)) {
         $fnameErr = "Only letters and white space allowed";
       }
@@ -19,7 +18,7 @@
     if (empty($_POST['lname'])) {
       $lnameErr = 'Lastname is required';
     } else {
-      $lname = test_input($_POST['lname']);
+      $lname = trim($_POST['lname']);
       if (!preg_match("/^[\p{L}' -]*$/u",$lname)) {
         $lnameErr = "Only letters and white space allowed";
       }
@@ -28,13 +27,13 @@
     if (empty($_POST['username'])) {
       $usernameErr = 'Username is required';
     } else {
-      $username = test_input($_POST['username']);
+      $username = trim($_POST['username']);
     }
 
     if (empty($_POST['email'])) {
       $emailErr = 'Email is required';
     } else {
-      $email = test_input($_POST['email']);
+      $email = trim($_POST['email']);
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $emailErr = "Invalid email format";
       }
@@ -104,34 +103,34 @@
 
     <div class="window-body">
       <h1 class="title">Register</h1>
-      <form method="post" action="register.php">
+      <form class="form" method="post" action="register.php">
         <div>
           <label for="fname"><span class="required">*</span> Firstname</label>
-          <input type="text" id="fname" name="fname" value="<?= htmlspecialchars($fname) ?>">
+          <input class="input" type="text" id="fname" name="fname" value="<?= htmlspecialchars($fname) ?>">
           <span class="<?= $fnameErr ? 'error' : '' ?>"><?= $fnameErr ?></span>
         </div>
 
         <div>
           <label for="lname"><span class="required">*</span> Lastname</label>
-          <input type="text" id="lname" name="lname" value="<?= htmlspecialchars($lname) ?>">
+          <input class="input" type="text" id="lname" name="lname" value="<?= htmlspecialchars($lname) ?>">
           <span class="<?= $lnameErr ? 'error' : '' ?>"><?= $lnameErr ?></span>
         </div>
 
         <div>
           <label for="username"><span class="required">*</span> Username</label>
-          <input type="text" id="username" name="username" value="<?= htmlspecialchars($username) ?>">
+          <input class="input" type="text" id="username" name="username" value="<?= htmlspecialchars($username) ?>">
           <span class="<?= $usernameErr ? 'error' : '' ?>"><?= $usernameErr ?></span>
         </div>
   
         <div>
           <label for="email"><span class="required">*</span> Email address</label>
-          <input type="email" id="email" name="email" value="<?= htmlspecialchars($email) ?>">
+          <input class="input" type="email" id="email" name="email" value="<?= htmlspecialchars($email) ?>">
           <span class="<?= $emailErr ? 'error' : '' ?>"><?= $emailErr ?></span>
         </div>
 
         <div>
           <label for="password"><span class="required">*</span> Password</label>
-          <input type="password" id="password" name="password">
+          <input class="input" type="password" id="password" name="password">
           <span class="<?= $passwordErr ? 'error' : '' ?>"><?= $passwordErr ?></span>
         </div>
   

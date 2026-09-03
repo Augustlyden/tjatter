@@ -84,7 +84,7 @@
                   <span class="group-subject"><?= htmlspecialchars($row['subject']) ?></span>
                   <p class="description"><?= htmlspecialchars($row['description']) ?></p>
                   <div class="create">
-                    <a class="enter-button" href="create-discussion.php?group_id=<?= $group_id ?>">CREATE DISCUSSION</a>
+                    <a class="enter-button create-button" href="create-discussion.php?group_id=<?= $group_id ?>">CREATE DISCUSSION</a>
                   </div>
                 </div>
               </div>

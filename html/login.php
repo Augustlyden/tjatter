@@ -1,6 +1,5 @@
 <?php
   require 'settings.php';
-  require 'includes/formValidation.php';
   require 'includes/functions.php';
 
   $email = $password = "";
@@ -10,7 +9,7 @@
     if (empty($_POST['email'])) {
       $emailErr = 'Email is required';
     } else {
-      $email = test_input($_POST['email']);
+      $email = trim($_POST['email']);
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $emailErr = "Invalid email format";
       }
@@ -55,16 +54,16 @@
     
     <div class="window-body">
       <h1 class="title">Login</h1>
-      <form method="post" action="login.php">
+      <form class="form" method="post" action="login.php">
         <div>
           <label for="email"> <span class="required">*</span> Email address</label>
-          <input type="email" id="email" name="email" value="<?= htmlspecialchars($email) ?>">
+          <input class="input" type="email" id="email" name="email" value="<?= htmlspecialchars($email) ?>">
           <span class="<?= $emailErr ? 'error' : '' ?>"><?= $emailErr ?></span>
         </div>
   
         <div>
           <label for="password"><span class="required">*</span> Password</label>
-          <input type="password" id="password" name="password">
+          <input class="input" type="password" id="password" name="password">
           <span class="<?= $passwordErr ? 'error' : '' ?>"><?= $passwordErr ?></span>
         </div>
   

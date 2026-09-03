@@ -105,7 +105,7 @@ body {
   color: var(--ink);
 }
 
-form {
+.form {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -118,7 +118,7 @@ label {
   letter-spacing: 0.5px;
 }
 
-input, textarea {
+.input, .textarea {
   font-family: 'Space Mono', monospace;
   font-size: 14px;
   padding: 10px 12px;
@@ -130,13 +130,13 @@ input, textarea {
   width: 100%;
 }
 
-input:focus, textarea:focus {
+.input:focus, textarea:focus {
   background: #fff;
   border-color: var(--coral);
   box-shadow: 3px 3px 0 var(--coral);
 }
 
-textarea {
+.textarea {
   height: 100px;
   resize: vertical;
 }
@@ -144,15 +144,15 @@ textarea {
 .button, .enter-button {
   font-family: 'Space Mono', monospace;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  padding: 12px;
+  padding: 10px 16px;
   margin-top: 8px;
   background: var(--coral);
   color: var(--paper);
-  border: var(--border-width) solid var(--ink);
-  box-shadow: 4px 4px 0 var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
   cursor: pointer;
   transition: transform 0.05s ease, box-shadow 0.05s ease;
 }
@@ -162,9 +162,14 @@ textarea {
   color: var(--ink);
 }
 
+.create-button:hover {
+  background: var(--pixel-green);
+  color: var(--ink);
+}
+
 .button:active, .enter-button:active {
-  transform: translate(4px, 4px);
-  box-shadow: 0 0 0 var(--ink);
+  box-shadow: 1px 1px 0 var(--ink);
+  transform: translate(2px, 2px);
 }
 
 .enter-button {
@@ -211,12 +216,18 @@ textarea {
   margin: 0 auto;
 }
 
-.group-card {
+.group-card, .post-card {
   display: flex;
   flex-direction: row;
-  padding: 18px;
-  background: var(--panel);
+  padding: 10px;
+  margin: 0 1rem;
+}
+.group-card {
   margin-bottom: 24px;
+}
+
+.posts-section article + article {
+  border-top: 1px dashed #b8b297;
 }
 
 .group-card h2 {
@@ -224,12 +235,17 @@ textarea {
   margin: 4px 0 0;
 }
 
+.post-card h2 {
+  font-size: 13px;
+  margin: 4px 0 0;
+  font-weight: 500;
+}
+
 .user-card {
   display: flex;
   flex-direction: row;
-  background: var(--panel);
   border: 3px solid var(--ink);
-  margin: 12px;
+  margin: 16px;
   padding: 12px;
   gap: 10px;
 }
@@ -262,6 +278,13 @@ textarea {
   color: var(--ink);
   opacity: 0.75;
   margin: 0;
+}
+
+.post {
+  font-size: 13px;
+  color: var(--ink);
+  margin: 0;
+  font-weight: 600;
 }
 
 .group-members {
@@ -348,6 +371,57 @@ textarea {
 
 .create-post {
   margin: 1rem 0;
+}
+
+.post-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 1rem;
+  position: sticky;
+  bottom: 0;
+}
+
+.post-form input[type="text"] {
+  flex: 1;
+  padding: 10px 12px;
+  font-family: 'Space Mono', monospace;
+  border: 2px solid var(--ink);
+  background: #fff;
+}
+
+.post-form input[type="text"]:focus {
+  outline: none;
+  border-color: var(--coral);
+}
+
+.post-form button {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7rem;
+  padding: 10px 16px;
+  background: var(--coral);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  color: var(--paper)
+}
+
+.post-form button:active {
+  box-shadow: 1px 1px 0 var(--ink);
+  transform: translate(2px, 2px);
+}
+
+.post-form button:hover {
+  background: var(--mustard);
+  color: var(--ink);
+}
+
+.post-form .error {
+  flex-basis: 100%;
+  color: var(--coral);
+  font-size: 0.75rem;
+  margin-top: 8px;
 }
 
 @media (max-width: 700px) {
