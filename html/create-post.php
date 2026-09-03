@@ -1,7 +1,6 @@
 <?php 
   require 'settings.php';
   require 'includes/functions.php';
-  require 'includes/formValidation.php';
 
   if (!isset($_SESSION['user_id'])) {
     header('Location: /login.php');
@@ -14,7 +13,7 @@
     if (empty($_POST['post'])) {
       redirectAndKill('Type something to post.', '/discussion.php?id=' . $discussionId);
     } else {
-      $post = test_input($_POST['post']);
+      $post = trim($_POST['post']);
     }
 
     $discussionCheck = $db->prepare(

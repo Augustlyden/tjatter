@@ -1,7 +1,6 @@
 <?php 
   require 'settings.php';
   require 'includes/functions.php';
-  require 'includes/formValidation.php';
 
   if (!isset($_SESSION['user_id'])) {
     header('Location: /login.php');
@@ -16,13 +15,13 @@
     if (empty($_POST['discussionName'])) {
       $discussionNameErr = 'A title is required';
     } else {
-      $discussionName = test_input($_POST['discussionName']);
+      $discussionName = trim($_POST['discussionName']);
     }
 
     if (empty($_POST['post'])) {
       $postErr = 'A first post is required';
     } else {
-      $post = test_input($_POST['post']);
+      $post = trim($_POST['post']);
     }
 
     $groupCheck = $db->prepare(
@@ -30,6 +29,10 @@
     );
     $groupCheck->execute([':id' => $groupId]);
     $group = $groupCheck->fetch(PDO::FETCH_ASSOC);
+
+    if (!$group) {
+      redirectAndKill('This "group" does not exist.', '/groups.php');
+    }
 
     $memberCheck = $db->prepare(
       'SELECT * FROM group_members 
@@ -40,10 +43,6 @@
       ':group_id' => $groupId,
     ]);
     $member = $memberCheck->fetch(PDO::FETCH_ASSOC);
-
-    if (!$group) {
-      redirectAndKill('This "group" does not exist.', '/groups.php');
-    }
 
     if (!$member) {
       redirectAndKill("You're not a member of this group. Join to create a discussion", '/groups.php');
@@ -104,16 +103,16 @@
 
       <div class="window-body">
         <h1 class="title">Create Discussion</h1>
-        <form method="post" action="create-discussion.php?group_id=<?= $groupId ?>">
+        <form class="form" method="post" action="create-discussion.php?group_id=<?= $groupId ?>">
           <div>
             <label for="discussionName"><span class="required">*</span> Title</label>
-            <input type="text" id="discussionName" name="discussionName" value="<?= htmlspecialchars($discussionName) ?>">
+            <input class="input" type="text" id="discussionName" name="discussionName" value="<?= htmlspecialchars($discussionName) ?>">
             <span class="<?= $discussionNameErr ? 'error' : '' ?>"><?= $discussionNameErr ?></span>
           </div>
 
           <div>
             <label for="post"><span class="required">*</span> First post</label>
-            <textarea id="post" name="post"><?= htmlspecialchars($post) ?></textarea>
+            <textarea class="textarea" id="post" name="post"><?= htmlspecialchars($post) ?></textarea>
             <span class="<?= $postErr ? 'error' : '' ?>"><?= $postErr ?></span>
           </div>
   

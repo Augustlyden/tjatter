@@ -1,6 +1,5 @@
 <?php
   require 'settings.php';
-  require 'includes/formValidation.php';
   require 'includes/functions.php';
 
   $groupName = $subject = $description = "";
@@ -15,19 +14,19 @@
     if (empty($_POST['groupName'])) {
       $groupNameErr = 'A title is required';
     } else {
-      $groupName = test_input($_POST['groupName']);
+      $groupName = trim($_POST['groupName']);
     }
 
     if (empty($_POST['subject'])) {
       $subjectErr = 'A subject is required';
     } else {
-      $subject = test_input($_POST['subject']);
+      $subject = trim($_POST['subject']);
     }
 
     if (empty($_POST['description'])) {
       $descErr = 'A description is required';
     } else {
-      $description = test_input($_POST['description']);
+      $description = trim($_POST['description']);
     }
 
     if (empty($groupNameErr) && empty($subjectErr) && empty($descErr)) {
@@ -87,22 +86,22 @@
 
       <div class="window-body">
         <h1 class="title">Create Group</h1>
-        <form method="post" action="create-group.php">
+        <form class="form" method="post" action="create-group.php">
           <div>
             <label for="groupName"><span class="required">*</span> Title</label>
-            <input type="text" id="groupName" name="groupName" value="<?= htmlspecialchars($groupName) ?>">
+            <input class="input" type="text" id="groupName" name="groupName" value="<?= htmlspecialchars($groupName) ?>">
             <span class="<?= $groupNameErr ? 'error' : '' ?>"><?= $groupNameErr ?></span>
           </div>
   
           <div>
             <label for="subject"><span class="required">*</span> Subject</label>
-            <input type="text" id="subject" name="subject" value="<?= htmlspecialchars($subject) ?>">
+            <input class="input" type="text" id="subject" name="subject" value="<?= htmlspecialchars($subject) ?>">
             <span class="<?= $subjectErr ? 'error' : '' ?>"><?= $subjectErr ?></span>
           </div>
   
           <div>
             <label for="description"><span class="required">*</span> Description</label>
-            <textarea id="description" name="description"><?= htmlspecialchars($description) ?></textarea>
+            <textarea class="textarea" id="description" name="description"><?= htmlspecialchars($description) ?></textarea>
             <span class="<?= $descErr ? 'error' : '' ?>"><?= $descErr ?></span>
           </div>
   
