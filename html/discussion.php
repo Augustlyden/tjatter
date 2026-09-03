@@ -12,7 +12,7 @@
     $discussion = $discussionCheck->fetch(PDO::FETCH_ASSOC);
 
     if (!$discussion) {
-      redirectAndKill('This "discussion" does not exist.', '/dashboard');
+      redirectAndKill('This "discussion" does not exist.', '/dashboard.php');
     }
 
     $stmt = $db->prepare(
@@ -86,31 +86,36 @@
                   <span class="name"><?= htmlspecialchars($row['discussion_name']) ?></span>
                   <span class="group-subject">created by: @<?= htmlspecialchars($row['username']) ?></span>
                   <p class="group-subject">created: <?= $row['created_at'] ?></p>
-                  <div class="create-post">
-                    <a class="enter-button" href="create-post.php?discussion_id=<?= $discussionId ?>">CREATE POST</a>
-                  </div>
                 </div>
               </div>
             </article>
           </section>
   
-          <section class="">
+          <section class="posts-section">
             <?php if (!$posts): ?>
               <div class="empty-rows">
                 <p>There are no posts here yet.</p>
               </div>
             <?php else: ?>
               <?php foreach ($posts as $post): ?>
-                <article class="panel group-card">
+                <article class="panel post-card">
                   <div class="group-card-body">
                     <h2>@<?= htmlspecialchars($post['username'])?></h2>
-                    <p class="group-subject"><?= htmlspecialchars($post['post'])?></p>
-                    <p class="group-subject">created: <?= $post['created_at'] ?></p>
+                    <p class="post"><?= htmlspecialchars($post['post'])?></p>
+                    <p class="group-subject">posted: <?= $post['created_at'] ?></p>
                   </div>
                 </article>
               <?php endforeach; ?>
             <?php endif; ?>
           </section>
+          <form class="post-form" action="create-post.php?discussion_id=<?= $discussionId ?>" method="post">
+            <input type="text" name="post" placeholder="Type your answer...">
+            <button type="submit">POST</button>
+            <?php if (isset($_SESSION['err'])): ?>
+              <p class="error"><?= $_SESSION['err'] ?></p>
+              <?php unset($_SESSION['err']); ?>
+            <?php endif; ?>
+          </form>
         <?php endif; ?>
       </div>
     </div>
