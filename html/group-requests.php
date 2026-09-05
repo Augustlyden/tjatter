@@ -64,7 +64,7 @@
           <span></span><span></span><span></span>
         </div>
       </div>
-      <section>
+      <section class="window-body post-section">
         <?php if (isset($_SESSION['err'])): ?>
           <p class="error"><?= $_SESSION['err'] ?></p>
           <?php unset($_SESSION['err']); ?>
@@ -76,12 +76,12 @@
           </div>
         <?php else: ?>
           <?php foreach ($rows as $row): ?>
-            <article>
-              <h2><?= htmlspecialchars($row['username']) ?></h2>
+            <article class="request-card">
+              <span class="name">@<?= htmlspecialchars($row['username']) ?></span>
               <form action="/request-accept.php" method="post">
                 <input type="hidden" name="user_id" value="<?= $row['user_id'] ?>">
                 <input type="hidden" name="group_id" value="<?= $groupId ?>">
-                <button type="submit">Accept</button>
+                <button type="submit" class="button">Accept</button>
               </form>
             </article>
           <?php endforeach; ?>

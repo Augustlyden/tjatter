@@ -255,6 +255,17 @@ label {
   flex-direction: column;
 }
 
+.request-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+}
+
+.request-card form {
+  margin: 0;
+}
+
 .halftone {
   background-color: var(--mustard);
   /* background-image: radial-gradient(rgba(27, 27, 47, 0.4) 1.4px, transparent 1.4px);
