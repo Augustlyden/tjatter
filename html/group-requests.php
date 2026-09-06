@@ -56,7 +56,7 @@
 <body>
   <div class="page-layout">
     <?php include 'sidebar.php'; ?>
-    <div class="window-group">
+    <div class="window-dashboard">
       <div class="window-titlebar">
         <span class="pixel-bubble"></span>
         TJATTER // REQUESTS
