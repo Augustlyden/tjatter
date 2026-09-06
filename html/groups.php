@@ -31,7 +31,7 @@
 <body>
   <div class="page-layout">
     <?php include 'sidebar.php'; ?>
-    <div class="window-group">
+    <div class="window-dashboard">
       <div class="window-titlebar">
         <span class="pixel-bubble"></span>
         TJATTER // ALL GROUPS
@@ -54,7 +54,11 @@
               <div class="group-card-body">
                 <h2><?= htmlspecialchars($row['name']) ?></h2>
                 <p class="group-subject"><?= htmlspecialchars($row['subject']) ?></p>
-                <p class="group-members"><?= (int)$row['members'] ?> members</p>
+                <p class="group-members">
+                  <?= (int)$row['members'] ?> 
+                  <?php $members = (int)$row['members'] === 1 ? 'member' : 'members'?>
+                  <?= $members ?>
+                </p>
                 <form method="post" action="request-join.php">
                   <input type="hidden" name="group_id" value="<?= (int)$row['group_id'] ?>">
                   <button class="button" type="submit">Request to join</button>
