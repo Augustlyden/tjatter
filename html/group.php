@@ -54,7 +54,7 @@
 
   <div class="page-layout">
     <?php include 'sidebar.php'; ?>
-    <div class="window-group">
+    <div class="window-dashboard">
       <div class="window-titlebar">
         <span class="pixel-bubble"></span>
         TJATTER // <?= htmlspecialchars($group['group_name']) ?>
@@ -79,13 +79,30 @@
             <article class="group">
               <div class="user-card halftone">
                 <div class="avatar"></div>
-                <div class="user-info">
-                  <span class="name"><?= htmlspecialchars($row['group_name']) ?></span>
-                  <span class="group-subject"><?= htmlspecialchars($row['subject']) ?></span>
-                  <p class="description"><?= htmlspecialchars($row['description']) ?></p>
-                  <div class="create">
-                    <a class="enter-button create-button" href="create-discussion.php?group_id=<?= $group_id ?>">CREATE DISCUSSION</a>
+                <div class="user-info-wrapper">
+                  <div class="user-info">
+                    <span class="name"><?= htmlspecialchars($row['group_name']) ?></span>
+                    <span class="group-subject"><?= htmlspecialchars($row['subject']) ?></span>
+                    <p class="description"><?= htmlspecialchars($row['description']) ?></p>
+                    <div class="create">
+                      <a class="enter-button create-button" href="create-discussion.php?group_id=<?= $group_id ?>">CREATE DISCUSSION</a>
+                    </div>
                   </div>
+                  <?php if ($row['role'] === 'admin'): ?>
+                    <div class="admin-view">
+                      <a class="admin-button create-button" href="group-requests.php?group_id=<?= $group_id ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 36 36">
+                          <path fill="currentColor" d="M32 6H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2m-1.54 22H5.66l7-7.24l-1.44-1.39L4 26.84V9.52l12.43 12.37a2 2 0 0 0 2.82 0L32 9.21v17.5l-7.36-7.36l-1.41 1.41ZM5.31 8h25.07L17.84 20.47Z" class="clr-i-outline clr-i-outline-path-1"/>
+                          <path fill="none" d="M0 0h36v36H0z"/>
+                        </svg>
+                      </a>
+                      <a class="admin-button create-button" href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24">
+                          <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M16 20v-1a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v1M12.5 7a4 4 0 1 1-8 0a4 4 0 0 1 8 0Zm3 4a4 4 0 0 0 0-8M23 20v-1a4 4 0 0 0-4-4"/>
+                        </svg>
+                      </a>
+                    </div>
+                  <?php endif ?>
                 </div>
               </div>
             </article>
