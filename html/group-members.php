@@ -75,7 +75,7 @@
                 <option value="member" <?= $row['role'] === 'member' ? 'selected' : '' ?>>Member</option>
                 <option value="admin" <?= $row['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
               </select>
-              <button type="submit" class="button">Change</button>
+              <button type="submit" class="select-button">CHANGE</button>
             </form>
           </article>
         <?php endforeach; ?>

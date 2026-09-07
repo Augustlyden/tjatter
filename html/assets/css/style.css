@@ -433,12 +433,12 @@ label {
   color: var(--paper)
 }
 
-.post-form button:active {
+.post-form button:active, .select-button:active {
   box-shadow: 1px 1px 0 var(--ink);
   transform: translate(2px, 2px);
 }
 
-.post-form button:hover {
+.post-form button:hover, .select-button:hover {
   background: var(--mustard);
   color: var(--ink);
 }
@@ -453,6 +453,43 @@ label {
 .admin-view {
   display: flex;
   gap: 8px;
+}
+
+select#select-role {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--ink);
+  background-color: var(--panel);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 0.4rem 2rem 0.4rem 0.6rem;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23000'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+}
+
+select#select-role:focus {
+  outline: none;
+  border-color: var(--coral);
+  box-shadow: 3px 3px 0 var(--coral);
+}
+
+.select-button {
+  font-family: 'Space Mono', monospace;
+  padding: 0.4rem 0.6rem;
+  background: var(--coral);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  color: var(--paper);
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 10px;
 }
 
 @media (max-width: 700px) {

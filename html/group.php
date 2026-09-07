@@ -82,6 +82,7 @@
                 <div class="user-info-wrapper">
                   <div class="user-info">
                     <span class="name"><?= htmlspecialchars($row['group_name']) ?></span>
+                    <span class="group-members"><?= $row['role']?></span>
                     <span class="group-subject"><?= htmlspecialchars($row['subject']) ?></span>
                     <p class="description"><?= htmlspecialchars($row['description']) ?></p>
                     <div class="create">
@@ -96,7 +97,7 @@
                           <path fill="none" d="M0 0h36v36H0z"/>
                         </svg>
                       </a>
-                      <a class="admin-button create-button" href="">
+                      <a class="admin-button create-button" href="group-members.php?group_id=<?= $group_id ?>">
                         <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24">
                           <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M16 20v-1a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v1M12.5 7a4 4 0 1 1-8 0a4 4 0 0 1 8 0Zm3 4a4 4 0 0 0 0-8M23 20v-1a4 4 0 0 0-4-4"/>
                         </svg>
