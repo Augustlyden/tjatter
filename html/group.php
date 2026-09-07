@@ -2,19 +2,29 @@
   require 'settings.php';
   require 'includes/functions.php';
 
-  $group_id = (int)$_GET['id'];
+  if (!isset($_SESSION['user_id'])) {
+    header('Location: /login.php');
+    die();
+  }
 
-  if (isset($_SESSION['user_id'])) {
+  if (!isset($_GET['id'])) {
+    redirectAndKill('Invalid request', '/dashboard.php');
+  }
+
+  $group_id = (int)$_GET['id'];
+  $err = "";
+
+  try {
     $groupCheck = $db->prepare(
       'SELECT * FROM groups_ WHERE id = :id;'
     );
     $groupCheck->execute([':id' => $group_id]);
     $group = $groupCheck->fetch(PDO::FETCH_ASSOC);
-
+  
     if (!$group) {
       redirectAndKill('This "group" does not exist.', '/groups.php');
     }
-
+  
     $stmt = $db->prepare(
       'SELECT 
         g.id AS group_id,
@@ -30,7 +40,7 @@
     );
     $stmt->execute([':group_id' => $group_id, ':user_id' => $_SESSION['user_id']]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
+  
     if (!empty($row)) {
       $discussionStmt = $db->prepare(
         'SELECT * FROM discussions
@@ -40,10 +50,11 @@
       $discussionStmt->execute([':group_id' => $group_id]);
       $discussions = $discussionStmt->fetchAll(PDO::FETCH_ASSOC);
     }
-  } else {
-    header('Location: /login.php');
-    die();
+  } catch (Exception $e) {
+    error_log('group-requests.php:' . $e->getMessage());
+    $err = 'Something went wrong, try again.';
   }
+
 ?>
 
 <?php 
@@ -64,7 +75,9 @@
       </div>
 
       <div>
-        <?php if (empty($row)): ?>
+        <?php if (!empty($err)): ?>
+          <span class="error"><?= $err ?></span>
+        <?php elseif (empty($row)): ?>
           <section>
             <div>
               <p>You're not a member of this group yet</p>
@@ -82,6 +95,7 @@
                 <div class="user-info-wrapper">
                   <div class="user-info">
                     <span class="name"><?= htmlspecialchars($row['group_name']) ?></span>
+                    <span class="group-members"><?= $row['role']?></span>
                     <span class="group-subject"><?= htmlspecialchars($row['subject']) ?></span>
                     <p class="description"><?= htmlspecialchars($row['description']) ?></p>
                     <div class="create">
@@ -96,7 +110,7 @@
                           <path fill="none" d="M0 0h36v36H0z"/>
                         </svg>
                       </a>
-                      <a class="admin-button create-button" href="">
+                      <a class="admin-button create-button" href="group-members.php?group_id=<?= $group_id ?>">
                         <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24">
                           <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M16 20v-1a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v1M12.5 7a4 4 0 1 1-8 0a4 4 0 0 1 8 0Zm3 4a4 4 0 0 0 0-8M23 20v-1a4 4 0 0 0-4-4"/>
                         </svg>
@@ -132,5 +146,5 @@
   
     </div>
   </div>
-  
 </body>
+</html>

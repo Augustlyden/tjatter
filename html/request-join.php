@@ -7,11 +7,21 @@
     die();
   }
 
-  if  ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['group_id'])) {
+  if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    redirectAndKill('Invalid request', '/dashboard.php');
+  }
+
+  if (!isset($_POST['group_id'])) {
+    redirectAndKill('Invalid request', '/dashboard.php');
+  }
+
+  $groupId = (int)$_POST['group_id'];
+
+  try {
     $groupCheck = $db->prepare(
       'SELECT * FROM groups_ WHERE id = :id;'
     );
-    $groupCheck->execute([':id' => $_POST['group_id']]);
+    $groupCheck->execute([':id' => $groupId]);
     $group = $groupCheck->fetch(PDO::FETCH_ASSOC);
 
     if (!$group) {
@@ -24,7 +34,7 @@
     );
     $memberCheck->execute([
       ':user_id' => $_SESSION['user_id'],
-      ':group_id' => $_POST['group_id'],
+      ':group_id' => $groupId,
     ]);
     $member = $memberCheck->fetch(PDO::FETCH_ASSOC);
 
@@ -45,5 +55,8 @@
 
     header('Location: /groups.php');
     die();
+  } catch (Exception $e) {
+    error_log('group-requests.php:' . $e->getMessage());
+    redirectAndKill('Something went wrong, try again', '/groups.php');
   }
 ?>

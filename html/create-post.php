@@ -7,26 +7,30 @@
     die();
   }
 
+  if (!isset($_GET['discussion_id'])) {
+    redirectAndKill('Invalid request', '/dashboard.php');
+  }
+
   $discussionId = (int)$_GET['discussion_id'];
 
-  if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (empty($_POST['post'])) {
-      redirectAndKill('Type something to post.', '/discussion.php?id=' . $discussionId);
-    } else {
-      $post = trim($_POST['post']);
-    }
+  if (empty($_POST['post'])) {
+    redirectAndKill('Type something to post.', '/discussion.php?id=' . $discussionId);
+  } else {
+    $post = trim($_POST['post']);
+  }
 
+  try {
     $discussionCheck = $db->prepare(
       'SELECT * FROM discussions
       WHERE id = :id;'
     );
     $discussionCheck->execute([':id' => $discussionId]);
     $discussion = $discussionCheck->fetch(PDO::FETCH_ASSOC);
-
+  
     if (!$discussion) {
       redirectAndKill('This discussion does not exist.', '/dashboard.php');
     }
-
+  
     $memberCheck = $db->prepare(
       'SELECT * FROM discussions d
       JOIN group_members gm ON gm.group_id = d.group_id
@@ -34,11 +38,11 @@
     );
     $memberCheck->execute([':d_id' => $discussionId, ':u_id' => $_SESSION['user_id']]);
     $member = $memberCheck->fetch(PDO::FETCH_ASSOC);
-
+  
     if (!$member) {
       redirectAndKill("You're not a member of this discussion", '/dashboard.php');
     }
-
+  
     $stmt = $db->prepare(
       'INSERT INTO posts (discussion_id, user_id, post)
       VALUES (:discussion_id, :user_id, :post);'
@@ -50,5 +54,8 @@
     ]);
     header('Location: /discussion.php?id=' . $discussionId);
     die();
+  } catch (Exception $e) {
+    error_log('create-post.php:' . $e->getMessage());
+    redirectAndKill('Something went wrong, try again', '/discussion.php?id=' . $discussionId);
   }
 ?>

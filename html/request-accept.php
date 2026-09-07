@@ -11,8 +11,8 @@
     redirectAndKill('Invalid request', '/dashboard.php');
   }
 
-  $groupId = $_POST['group_id'];
-  $userId = $_POST['user_id'];
+  $groupId = (int)$_POST['group_id'];
+  $userId = (int)$_POST['user_id'];
 
   try {
     $adminCheck = $db->prepare(
@@ -50,13 +50,13 @@
     $stmt->execute([':group_id' => $groupId]);
 
     $db->commit();
-    header('Location: /group-requests.php?group-id=' . $groupId);
+    header('Location: /group-requests.php?group_id=' . $groupId);
     die();
   } catch (Exception $e) {
     if ($db->inTransaction()) {
       $db->rollBack();
     }
     error_log('request-accept.php:' . $e->getMessage());
-    redirectAndKill('Something went wrong, try again', '/group-requests.php?group-id=' . $groupId);
+    redirectAndKill('Something went wrong, try again', '/group-requests.php?group_id=' . $groupId);
   }
 ?>

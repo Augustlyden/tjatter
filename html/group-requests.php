@@ -12,6 +12,7 @@
   }
 
   $groupId = (int)$_GET['group_id'];
+  $err = "";
 
   try {
     $adminCheck = $db->prepare(
@@ -44,7 +45,7 @@
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   } catch (Exception $e) {
     error_log('group-requests.php:' . $e->getMessage());
-    redirectAndKill('Something went wrong, try again', '/group.php?group-id=' . $groupId);
+    $err = 'Something went wrong, try again.';
   }
 ?>
 
@@ -70,7 +71,9 @@
           <?php unset($_SESSION['err']); ?>
         <?php endif; ?>
 
-        <?php if (empty($rows)): ?>
+        <?php if (!empty($err)): ?>
+          <span class="error"><?= $err ?></span>
+        <?php elseif (empty($rows)): ?>
           <div class="empty-rows">
             <p>No pending requests.</p>
           </div>
@@ -79,7 +82,7 @@
             <article class="request-card">
               <span class="name">@<?= htmlspecialchars($row['username']) ?></span>
               <form action="/request-accept.php" method="post">
-                <input type="hidden" name="user_id" value="<?= $row['user_id'] ?>">
+                <input type="hidden" name="user_id" value="<?= (int)$row['user_id'] ?>">
                 <input type="hidden" name="group_id" value="<?= $groupId ?>">
                 <button type="submit" class="button">Accept</button>
               </form>
@@ -90,3 +93,4 @@
     </div>
   </div>
 </body>
+</html>
