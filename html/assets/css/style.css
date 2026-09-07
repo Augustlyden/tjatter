@@ -174,10 +174,7 @@ label {
 
 .admin-button {
   color: var(--paper);
-  /* font-weight: 700;
-  font-size: 0.7rem; */
   background-color: var(--coral);
-  /* letter-spacing: 1px; */
   padding: 5px 10px;
   border: 1.5px solid var(--ink);
   box-shadow: 2px 3px 0 var(--ink);
