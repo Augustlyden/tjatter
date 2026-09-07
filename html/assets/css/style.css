@@ -215,6 +215,7 @@ label {
   color: var(--coral);
   font-size: 13px;
   font-weight: 700; 
+  margin: 16px;
 }
 
 .group-grid {

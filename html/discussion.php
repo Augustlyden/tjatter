@@ -2,9 +2,19 @@
   require 'settings.php';
   require 'includes/functions.php';
 
-  $discussionId = (int)$_GET['id'];
+  if (!isset($_SESSION['user_id'])) {
+    header('Location: /login.php');
+    die();
+  }
 
-  if (isset($_SESSION['user_id'])) {
+  if (!isset($_GET['id'])) {
+    redirectAndKill('Invalid request', '/dashboard.php');
+  }
+
+  $discussionId = (int)$_GET['id'];
+  $err = "";
+
+  try {
     $discussionCheck = $db->prepare(
       'SELECT * FROM discussions WHERE id = :id;'
     );
@@ -43,9 +53,9 @@
       $postStmt->execute([':d_id' => $discussionId]);
       $posts = $postStmt->fetchAll(PDO::FETCH_ASSOC);
     }
-  } else {
-    header('Location: /login.php');
-    die();
+  } catch (\Throwable $th) {
+    error_log('discussion.php:' . $e->getMessage());
+    $err = 'Something went wrong, try again.';
   }
 ?>
 
@@ -68,7 +78,9 @@
       </div>
 
       <div>
-        <?php if (empty($row)): ?>
+        <?php if (!empty($err)): ?>
+          <span class="error"><?= $err ?></span>
+        <?php elseif (empty($row)): ?>
           <section>
             <div>
               <p>Join the group to take part in this discussion.</p>
@@ -121,3 +133,4 @@
     </div>
   </div>
 </body>
+</html>

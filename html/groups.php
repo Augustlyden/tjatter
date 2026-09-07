@@ -2,7 +2,14 @@
   require 'settings.php';
   require 'includes/functions.php';
 
-  if (isset($_SESSION['user_id'])) {
+  if (!isset($_SESSION['user_id'])) {
+    header('Location: /login.php');
+    die();
+  }
+
+  $err = "";
+
+  try {
     $stmt = $db->prepare(
       'SELECT 
         g.id AS group_id,
@@ -18,9 +25,9 @@
     );
     $stmt->execute([':id' => $_SESSION['user_id']]);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  } else {
-    header('Location: /login.php');
-    die();
+  } catch (Exception $e) {
+    error_log('groups.php:' . $e->getMessage());
+    $err = 'Something went wrong, try again.';
   }
 ?>
 
@@ -40,7 +47,9 @@
         </div>
       </div>
       <section class="group-grid">
-        <?php if (empty($rows)): ?>  
+        <?php if (!empty($err)): ?>
+          <span class="error"><?= $err ?></span>
+        <?php elseif (empty($rows)): ?>  
           <div class="empty-rows">
             <p>Oops, you've joined all groups already.</p>
             <div class="empty-buttons">

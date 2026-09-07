@@ -12,6 +12,7 @@
   }
 
   $groupId = (int)$_GET['group_id'];
+  $err = "";
 
   try {
     $adminCheck = $db->prepare(
@@ -45,7 +46,7 @@
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   } catch (Exception $e) {
     error_log('group-members.php:' . $e->getMessage());
-    redirectAndKill('Something went wrong, try again', '/group.php?group-id=' . $groupId);
+    $err = 'Something went wrong, try again.';
   }
 ?>
 
@@ -65,21 +66,26 @@
         </div>
       </div>
       <section class="window-body">
-        <?php foreach ($rows as $row): ?>
-          <article class="request-card">
-            <span class="name">@<?= htmlspecialchars($row['username']) ?></span>
-            <form action="/change-role.php" method="post">
-              <input type="hidden" name="user_id" value="<?= $row['user_id'] ?>">
-              <input type="hidden" name="group_id" value="<?= $groupId ?>">
-              <select name="role" id="select-role">
-                <option value="member" <?= $row['role'] === 'member' ? 'selected' : '' ?>>Member</option>
-                <option value="admin" <?= $row['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
-              </select>
-              <button type="submit" class="select-button">CHANGE</button>
-            </form>
-          </article>
-        <?php endforeach; ?>
+        <?php if (!empty($err)): ?>
+          <span class="error"><?= $err ?></span>
+        <?php else: ?>
+          <?php foreach ($rows as $row): ?>
+            <article class="request-card">
+              <span class="name">@<?= htmlspecialchars($row['username']) ?></span>
+              <form action="/change-role.php" method="post">
+                <input type="hidden" name="user_id" value="<?= $row['user_id'] ?>">
+                <input type="hidden" name="group_id" value="<?= $groupId ?>">
+                <select name="role" id="select-role">
+                  <option value="member" <?= $row['role'] === 'member' ? 'selected' : '' ?>>Member</option>
+                  <option value="admin" <?= $row['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+                </select>
+                <button type="submit" class="select-button">CHANGE</button>
+              </form>
+            </article>
+          <?php endforeach; ?>
+        <?php endif; ?>
       </section>
     </div>
   </div>
 </body>
+</html>

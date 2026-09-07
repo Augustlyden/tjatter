@@ -2,7 +2,12 @@
   require 'settings.php';
   require 'includes/functions.php';
 
-  if (isset($_SESSION['user_id'])) {
+  if (!isset($_SESSION['user_id'])) {
+    header('Location: /login.php');
+    die();
+  }
+
+  try {
     $userStmt = $db->prepare(
       'SELECT 
         fname,
@@ -28,9 +33,9 @@
     );
     $stmt->execute([':id' => $_SESSION['user_id']]);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  } else {
-    header('Location: /login.php');
-    die();
+  } catch (\Throwable $th) {
+    error_log('dashboard.php:' . $e->getMessage());
+    $err = 'Something went wrong, try again.';
   }
 ?>
 
@@ -60,9 +65,15 @@
         </div>
       </div>
 
-      <section class="group-grid">
+      <?php if (isset($_SESSION['err'])): ?>
+        <p class="error"><?= $_SESSION['err'] ?></p>
+        <?php unset($_SESSION['err']); ?>
+      <?php endif; ?>
 
-        <?php if (empty($rows)): ?>  
+      <section class="group-grid">
+        <?php if (!empty($err)): ?>
+          <span class="error"><?= $err ?></span>
+        <?php elseif (empty($rows)): ?>  
           <div class="empty-rows">
             <p>You aren't part of any groups just yet.</p>
             <div class="empty-buttons">

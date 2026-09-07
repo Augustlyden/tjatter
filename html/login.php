@@ -6,34 +6,39 @@
   $emailErr = $passwordErr = $err = "";
 
   if ($_SERVER["REQUEST_METHOD"]  === "POST") {
-    if (empty($_POST['email'])) {
-      $emailErr = 'Email is required';
-    } else {
-      $email = trim($_POST['email']);
-      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $emailErr = "Invalid email format";
+    try {
+      if (empty($_POST['email'])) {
+        $emailErr = 'Email is required';
+      } else {
+        $email = trim($_POST['email']);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+          $emailErr = "Invalid email format";
+        }
       }
-    }
-    if (empty($_POST['password'])) {
-      $passwordErr = 'Password is required';
-    } else {
-      $password = $_POST["password"];
-    }
-
-    if (empty($emailErr) && empty($passwordErr) ) {
-      $stmt = $db->prepare('SELECT * FROM users WHERE email = :email;');
-      $stmt->execute([':email' => $email]);
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      if (!$row || !password_verify($password, $row['password'])) {
-        $err = "Wrong email or password";
+      if (empty($_POST['password'])) {
+        $passwordErr = 'Password is required';
+      } else {
+        $password = $_POST["password"];
       }
 
-      if (empty($err)) {
-        $_SESSION['user_id'] = $row['id'];
-        header('Location: /dashboard.php');
-        die();
+      if (empty($emailErr) && empty($passwordErr) ) {
+        $stmt = $db->prepare('SELECT * FROM users WHERE email = :email;');
+        $stmt->execute([':email' => $email]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row || !password_verify($password, $row['password'])) {
+          $err = "Wrong email or password";
+        }
+
+        if (empty($err)) {
+          $_SESSION['user_id'] = $row['id'];
+          header('Location: /dashboard.php');
+          die();
+        }
       }
+    } catch (Exception $e) {
+      error_log('login.php:' . $e->getMessage());
+      $err = 'Something went wrong, try again';
     }
   }
 ?>
@@ -73,6 +78,5 @@
       <p class="window-footer">Don't have an account? <a href="register.php">Create one</a></p>
     </div>
   </div>
-
 </body>
 </html>

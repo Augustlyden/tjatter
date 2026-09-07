@@ -49,39 +49,44 @@
     }
 
     if (empty($fnameErr) && empty($lnameErr) && empty($usernameErr) && empty($emailErr) && empty($passwordErr)) {
-      $checkEmail = $db->prepare('SELECT * FROM users WHERE email = :email;');
-      $checkEmail->execute([':email' => $email]);
-      $row = $checkEmail->fetch(PDO::FETCH_ASSOC);
-
-      if ($row) {
-        $err = "Email address is already registred, do you want to login instead?";
-      }
-
-      $checkUsername = $db->prepare('SELECT * FROM users WHERE username = :username;');
-      $checkUsername->execute([':username' => $username]);
-      $row = $checkUsername->fetch(PDO::FETCH_ASSOC);
-
-      if ($row) {
-        $usernameExistsErr = "Username already exists, please choose another one";
-      }
-
-      if (empty($err) && empty($usernameExistsErr)) {
-        $stmt = $db->prepare(
-          'INSERT INTO users (fname, lname, username, email, password) 
-          VALUES (:fname, :lname, :username, :email, :password)'
-        );
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt->execute([
-          ':fname' => $fname,
-          ':lname' => $lname, 
-          ':username' => $username, 
-          ':email' => $email, 
-          ':password' => $hashedPassword
-        ]);
-        $newUserId = $db->lastInsertId();
-        $_SESSION['user_id'] = $newUserId;
-        header('Location: /dashboard.php');
-        die();
+      try {
+        $checkEmail = $db->prepare('SELECT * FROM users WHERE email = :email;');
+        $checkEmail->execute([':email' => $email]);
+        $row = $checkEmail->fetch(PDO::FETCH_ASSOC);
+  
+        if ($row) {
+          $err = "Email address is already registred, do you want to login instead?";
+        }
+  
+        $checkUsername = $db->prepare('SELECT * FROM users WHERE username = :username;');
+        $checkUsername->execute([':username' => $username]);
+        $row = $checkUsername->fetch(PDO::FETCH_ASSOC);
+  
+        if ($row) {
+          $usernameExistsErr = "Username already exists, please choose another one";
+        }
+  
+        if (empty($err) && empty($usernameExistsErr)) {
+          $stmt = $db->prepare(
+            'INSERT INTO users (fname, lname, username, email, password) 
+            VALUES (:fname, :lname, :username, :email, :password)'
+          );
+          $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+          $stmt->execute([
+            ':fname' => $fname,
+            ':lname' => $lname, 
+            ':username' => $username, 
+            ':email' => $email, 
+            ':password' => $hashedPassword
+          ]);
+          $newUserId = $db->lastInsertId();
+          $_SESSION['user_id'] = $newUserId;
+          header('Location: /dashboard.php');
+          die();
+        }
+      } catch (Exception $e) {
+        error_log('groups.php:' . $e->getMessage());
+        $err = 'Something went wrong, try again.';
       }
     }
   }
