@@ -7,6 +7,10 @@
     die();
   }
 
+  if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    redirectAndKill('Invalid request', '/dashboard.php');
+  }
+
   $groupId = (int)$_POST['group_id'];
   $bytes = random_bytes(5);
   $token = bin2hex($bytes);
