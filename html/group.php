@@ -105,22 +105,41 @@
                   <?php if ($row['role'] === 'admin'): ?>
                     <div class="admin-view">
                       <a class="admin-button create-button" href="group-requests.php?group_id=<?= $group_id ?>">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 36 36">
-                          <path fill="currentColor" d="M32 6H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h28a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2m-1.54 22H5.66l7-7.24l-1.44-1.39L4 26.84V9.52l12.43 12.37a2 2 0 0 0 2.82 0L32 9.21v17.5l-7.36-7.36l-1.41 1.41ZM5.31 8h25.07L17.84 20.47Z" class="clr-i-outline clr-i-outline-path-1"/>
-                          <path fill="none" d="M0 0h36v36H0z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-inbox">
+                          <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+                          <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
                         </svg>
                       </a>
                       <a class="admin-button create-button" href="group-members.php?group_id=<?= $group_id ?>">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24">
-                          <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M16 20v-1a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v1M12.5 7a4 4 0 1 1-8 0a4 4 0 0 1 8 0Zm3 4a4 4 0 0 0 0-8M23 20v-1a4 4 0 0 0-4-4"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users">
+                          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                          <path d="M16 3.128a4 4 0 0 1 0 7.744"/>
+                          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                          <circle cx="9" cy="7" r="4"/>
                         </svg>
                       </a>
+                      <form action="generate-token.php" method="post">
+                        <input type="hidden" name="group_id" value="<?= $group_id ?>">
+                        <button type="submit" class="admin-button create-button">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="33" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <line x1="19" x2="19" y1="8" y2="14"/>
+                            <line x1="22" x2="16" y1="11" y2="11"/>
+                          </svg>
+                        </button>
+                      </form>
                     </div>
                   <?php endif ?>
                 </div>
               </div>
             </article>
           </section>
+
+          <?php if (isset($_SESSION['message'])): ?>
+            <p class="message"><?= $_SESSION['message'] ?></p>
+            <?php unset($_SESSION['message']); ?>
+          <?php endif; ?>
   
           <section class="group-grid">
             <?php if (!$discussions): ?>

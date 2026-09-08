@@ -81,7 +81,14 @@
           ]);
           $newUserId = $db->lastInsertId();
           $_SESSION['user_id'] = $newUserId;
-          header('Location: /dashboard.php');
+
+          if (isset($_SESSION['redirect_after_login'])) {
+            $redirect = $_SESSION['redirect_after_login'];
+            unset($_SESSION['redirect_after_login']);
+            header('Location: ' . $redirect);
+          } else {
+            header('Location: /dashboard.php');
+          }
           die();
         }
       } catch (Exception $e) {

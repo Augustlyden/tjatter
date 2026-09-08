@@ -66,9 +66,9 @@
         </div>
       </div>
       <section class="window-body post-section">
-        <?php if (isset($_SESSION['err'])): ?>
-          <p class="error"><?= $_SESSION['err'] ?></p>
-          <?php unset($_SESSION['err']); ?>
+        <?php if (isset($_SESSION['message'])): ?>
+          <p class="error"><?= $_SESSION['message'] ?></p>
+          <?php unset($_SESSION['message']); ?>
         <?php endif; ?>
 
         <?php if (!empty($err)): ?>
