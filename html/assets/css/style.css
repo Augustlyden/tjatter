@@ -181,6 +181,22 @@ label, .label {
   cursor: pointer;
 }
 
+.button-disabled {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 14px;
+  margin-top: 8px;
+  background: var(--pixel-green);
+  color: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: not-allowed;
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
+}
+
 .enter, .empty-buttons {
   margin-top: 1rem;
 }
