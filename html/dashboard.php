@@ -7,6 +7,8 @@
     die();
   }
 
+  $err = "";
+
   try {
     $userStmt = $db->prepare(
       'SELECT 
@@ -65,9 +67,9 @@
         </div>
       </div>
 
-      <?php if (isset($_SESSION['err'])): ?>
-        <p class="error"><?= $_SESSION['err'] ?></p>
-        <?php unset($_SESSION['err']); ?>
+      <?php if (isset($_SESSION['message'])): ?>
+        <p class="error"><?= $_SESSION['message'] ?></p>
+        <?php unset($_SESSION['message']); ?>
       <?php endif; ?>
 
       <section class="group-grid">

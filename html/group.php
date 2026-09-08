@@ -135,6 +135,11 @@
               </div>
             </article>
           </section>
+
+          <?php if (isset($_SESSION['message'])): ?>
+            <p class="message"><?= $_SESSION['message'] ?></p>
+            <?php unset($_SESSION['message']); ?>
+          <?php endif; ?>
   
           <section class="group-grid">
             <?php if (!$discussions): ?>
