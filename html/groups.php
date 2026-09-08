@@ -15,12 +15,11 @@
         g.id AS group_id,
         g.group_name as name,
         g.subject,
-        g.members
+        g.members,
+        gm.status
       FROM groups_ g
-      WHERE NOT EXISTS (
-        SELECT 1 FROM group_members gm
-        WHERE gm.group_id = g.id AND gm.user_id = :id
-      )
+      LEFT JOIN group_members gm ON gm.group_id = g.id AND gm.user_id = :id
+      WHERE gm.status IS NULL OR gm.status = \'pending\'
       ORDER BY g.group_name;'
     );
     $stmt->execute([':id' => $_SESSION['user_id']]);
@@ -70,7 +69,13 @@
                 </p>
                 <form method="post" action="request-join.php">
                   <input type="hidden" name="group_id" value="<?= (int)$row['group_id'] ?>">
-                  <button class="button" type="submit">Request to join</button>
+                  <button 
+                    <?= $row['status'] === 'pending' ? 'disabled' : '' ?>
+                    class="<?= $row['status'] === 'pending' ? 'button-disabled' : 'button' ?>" 
+                    type="submit"
+                  >
+                    <?= $row['status'] === 'pending' ? 'Request Pending' : 'Request to join' ?>
+                  </button>
                   <?php if (isset($_SESSION['message'])): ?>
                     <p class="error"><?= $_SESSION['message'] ?></p>
                     <?php unset($_SESSION['message']); ?>
